@@ -5,7 +5,7 @@ namespace stc_discernment_server.Models {
 
     public class AppDbContext : DbContext {
 
-        public DbSet<Candidate>? Candidates { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             builder.Entity<Candidate>(e => {
