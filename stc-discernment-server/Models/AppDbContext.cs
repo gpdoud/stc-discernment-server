@@ -5,10 +5,10 @@ namespace stc_discernment_server.Models {
 
     public class AppDbContext : DbContext {
 
-        public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<Parishioner> Parishioners { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
-            builder.Entity<Candidate>(e => {
+            builder.Entity<Parishioner>(e => {
                 e.HasKey(p => p.Id);
                 e.Property(p => p.Firstname)
                     .HasMaxLength(30)

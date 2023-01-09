@@ -22,7 +22,7 @@ namespace stc_discernment_server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("stc_discernment_server.Models.Candidate", b =>
+            modelBuilder.Entity("stc_discernment_server.Models.Parishioner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,9 +65,9 @@ namespace stc_discernment_server.Migrations
                     b.Property<bool>("Reviewed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Status")
+                    b.Property<int?>("Status")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("int");
 
                     b.Property<string>("SubmittedBy")
                         .HasMaxLength(30)
@@ -81,7 +81,7 @@ namespace stc_discernment_server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Candidates");
+                    b.ToTable("Parishioners");
                 });
 #pragma warning restore 612, 618
         }

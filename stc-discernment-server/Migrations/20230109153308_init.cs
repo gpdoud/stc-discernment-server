@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace stc_discernment_server.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Candidates",
+                name: "Parishioners",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace stc_discernment_server.Migrations
                     Ministry = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Reviewed = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Status = table.Column<int>(type: "int", maxLength: 20, nullable: true),
                     SubmittedBy = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -31,14 +31,14 @@ namespace stc_discernment_server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Candidates", x => x.Id);
+                    table.PrimaryKey("PK_Parishioners", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Candidates");
+                name: "Parishioners");
         }
     }
 }
