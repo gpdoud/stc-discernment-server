@@ -44,7 +44,8 @@ namespace stc_discernment_server.Controllers {
             if (id != parishioner.Id) {
                 return BadRequest();
             }
-
+            
+            parishioner.Updated = DateTime.Now;
             _context.Entry(parishioner).State = EntityState.Modified;
 
             try {
@@ -64,6 +65,7 @@ namespace stc_discernment_server.Controllers {
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Parishioner>> PostParishioner(Parishioner parishioner) {
+            parishioner.Created= DateTime.Now;
             _context.Parishioners.Add(parishioner);
             await _context.SaveChangesAsync();
 

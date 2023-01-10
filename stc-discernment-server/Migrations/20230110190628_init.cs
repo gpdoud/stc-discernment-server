@@ -23,7 +23,7 @@ namespace stc_discernment_server.Migrations
                     Ministry = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Reviewed = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<int>(type: "int", maxLength: 20, nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     SubmittedBy = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),

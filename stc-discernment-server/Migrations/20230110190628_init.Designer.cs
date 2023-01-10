@@ -12,14 +12,14 @@ using stc_discernment_server.Models;
 namespace stc_discernment_server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230109153308_init")]
+    [Migration("20230110190628_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -67,9 +67,10 @@ namespace stc_discernment_server.Migrations
                     b.Property<bool>("Reviewed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("Status")
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("SubmittedBy")
                         .HasMaxLength(30)
