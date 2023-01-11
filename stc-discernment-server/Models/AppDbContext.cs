@@ -35,6 +35,11 @@ namespace stc_discernment_server.Models {
                     .HasColumnType("datetime");
                 e.Property(p => p.Updated)
                     .HasColumnType("datetime");
+
+                e.Property(p => p.CallerId);
+                e.HasOne(p => p.Caller)
+                    .WithMany()
+                    .HasForeignKey(p => p.CallerId);
             });
         }
 

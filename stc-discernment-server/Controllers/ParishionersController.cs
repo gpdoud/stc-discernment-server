@@ -22,7 +22,7 @@ namespace stc_discernment_server.Controllers {
         // GET: api/Parishioners
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Parishioner>>> GetParishioners() {
-            return await _context.Parishioners.ToListAsync();
+            return await _context.Parishioners.Include(x => x.Caller).ToListAsync();
         }
 
         // GET: api/Parishioners/5
