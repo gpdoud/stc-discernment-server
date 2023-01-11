@@ -15,6 +15,7 @@ namespace stc_discernment_server.Models {
         public string Status { get; set; } = string.Empty; 
         public string? SubmittedBy { get; set; } = null;
 
+        public bool IsCaller { get; set; } = true;
         public int? CallerId { get; set; } = null;
         public virtual Parishioner? Caller { get; set; } = null;
 

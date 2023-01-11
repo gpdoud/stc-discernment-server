@@ -19,16 +19,28 @@ namespace stc_discernment_server.Controllers {
             _context = context;
         }
 
+        [HttpGet("callers")]
+        public async Task<ActionResult<IEnumerable<Parishioner>>> GetCommittee() {
+            return await _context.Parishioners
+                                .Where(x => x.IsCaller)
+                                .OrderBy(x => x.Lastname)
+                                .ToListAsync();
+        }
+
         // GET: api/Parishioners
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Parishioner>>> GetParishioners() {
-            return await _context.Parishioners.Include(x => x.Caller).ToListAsync();
+            return await _context.Parishioners
+                                .Include(x => x.Caller)
+                                .ToListAsync();
         }
 
         // GET: api/Parishioners/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Parishioner>> GetParishioner(int id) {
-            var parishioner = await _context.Parishioners.FindAsync(id);
+            var parishioner = await _context.Parishioners
+                                            .Include(x => x.Caller)
+                                            .SingleOrDefaultAsync(x => x.Id == id);
 
             if (parishioner == null) {
                 return NotFound();
