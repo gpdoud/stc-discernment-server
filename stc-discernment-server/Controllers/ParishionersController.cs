@@ -39,8 +39,10 @@ namespace stc_discernment_server.Controllers {
         [HttpGet("candidates")]
         public async Task<ActionResult<IEnumerable<Parishioner>>> GetCandidates() {
             return await _context.Parishioners
+                                .Where(x => x.Ministry == "Parishioner" 
+                                            && x.Status == string.Empty
+                                            && x.CallerId != null)
                                 .Include(x => x.Caller)
-                                .Where(x => x.Ministry == "Parishioner")
                                 .OrderBy(x => x.Caller.Lastname)
                                 .ToListAsync();
         }
