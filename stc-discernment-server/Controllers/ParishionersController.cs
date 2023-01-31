@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 using stc_discernment_server.Models;
 
@@ -14,15 +15,22 @@ namespace stc_discernment_server.Controllers {
     [ApiController]
     public class ParishionersController : ControllerBase {
         private readonly AppDbContext _context;
+        private const string ActiveYearKey = "active-year";
+        private readonly int ConfigActiveYear;
 
         public ParishionersController(AppDbContext context) {
             _context = context;
+            var cfgActiveYear = context.Configurations.Find(ActiveYearKey);
+            if(cfgActiveYear is null) {
+                throw new Exception("Active year config is missing!");
+            }
+            ConfigActiveYear = Convert.ToInt32(cfgActiveYear.DataValue);
         }
 
         [HttpGet("callers")]
         public async Task<ActionResult<IEnumerable<Parishioner>>> GetCommittee() {
             return await _context.Parishioners
-                                .Where(x => x.IsCaller)
+                                .Where(x => x.IsCaller && x.Year == ConfigActiveYear)
                                 .OrderBy(x => x.Lastname)
                                 .ToListAsync();
         }
@@ -32,6 +40,7 @@ namespace stc_discernment_server.Controllers {
         public async Task<ActionResult<IEnumerable<Parishioner>>> GetParishioners() {
             return await _context.Parishioners
                                 .Include(x => x.Caller)
+                                .Where(x => x.Year == ConfigActiveYear)
                                 .ToListAsync();
         }
 
@@ -40,6 +49,7 @@ namespace stc_discernment_server.Controllers {
         public async Task<ActionResult<IEnumerable<Parishioner>>> GetCandidates() {
             return await _context.Parishioners
                                 .Where(x => x.Ministry == "Parishioner" 
+                                            && x.Year == ConfigActiveYear
                                             && x.Status == string.Empty
                                             && x.CallerId != null)
                                 .Include(x => x.Caller)
@@ -51,6 +61,7 @@ namespace stc_discernment_server.Controllers {
         [HttpGet("{id}")]
         public async Task<ActionResult<Parishioner>> GetParishioner(int id) {
             var parishioner = await _context.Parishioners
+                                            .Where(x => x.Year == ConfigActiveYear)
                                             .Include(x => x.Caller)
                                             .SingleOrDefaultAsync(x => x.Id == id);
 
