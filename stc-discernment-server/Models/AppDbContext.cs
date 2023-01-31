@@ -6,6 +6,7 @@ namespace stc_discernment_server.Models {
     public class AppDbContext : DbContext {
 
         public DbSet<Parishioner> Parishioners { get; set; }
+        public DbSet<Configuration> Configurations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             builder.Entity<Parishioner>(e => {
@@ -40,6 +41,19 @@ namespace stc_discernment_server.Models {
                 e.HasOne(p => p.Caller)
                     .WithMany()
                     .HasForeignKey(p => p.CallerId);
+            });
+
+            builder.Entity<Configuration>(e => {
+                e.ToTable("Configs");
+                e.HasKey(x => x.KeyValue);
+                e.Property(x => x.KeyValue).HasMaxLength(50).IsRequired();
+                e.Property(x => x.DataValue).HasMaxLength(80);
+                e.Property(x => x.Note).HasMaxLength(80);
+                e.Property(x => x.System);
+                e.Property(x => x.Active).IsRequired();
+                e.Property(x => x.Created).IsRequired();
+                e.Property(x => x.Updated);
+                e.HasIndex(x => x.KeyValue).IsUnique();
             });
         }
 
