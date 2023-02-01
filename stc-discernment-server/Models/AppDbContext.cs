@@ -44,7 +44,7 @@ namespace stc_discernment_server.Models {
             });
 
             builder.Entity<Configuration>(e => {
-                e.ToTable("Configs");
+                e.ToTable("Configurations");
                 e.HasKey(x => x.KeyValue);
                 e.Property(x => x.KeyValue).HasMaxLength(50).IsRequired();
                 e.Property(x => x.DataValue).HasMaxLength(80);
